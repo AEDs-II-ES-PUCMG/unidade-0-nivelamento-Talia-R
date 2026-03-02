@@ -27,9 +27,12 @@ public class ProdutoPerecivel extends Produto {
         return dataDeValidade.isBefore(LocalDate.now());
     }
 
+    /**
+     * Verifica se o produto está dentro do período para receber desconto.
+     * @return true se o produto estiver a até PRAZO_DESCONTO dias do vencimento.
+     */
     private boolean temDesconto(){
-        // se a data de validade é depois da data de HJ + 7 dias
-        return !(dataDeValidade.isAfter(LocalDate.now().plusDays(PRAZO_DESCONTO)));
+        return !foraValidade() && !(dataDeValidade.isAfter(LocalDate.now().plusDays(PRAZO_DESCONTO)));
     }
 
     @Override
