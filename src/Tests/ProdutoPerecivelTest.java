@@ -7,13 +7,13 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import Produto;
+import modelo.Produto;
+import modelo.ProdutoPerecivel;
 
 public class ProdutoPerecivelTest {
     
 
     Produto produto;
-        
     
     @BeforeEach
     public void prepare(){

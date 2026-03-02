@@ -1,4 +1,7 @@
 package Tests;
+import modelo.Produto;
+import modelo.ProdutoNaoPerecivel;
+
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,7 +11,6 @@ import java.util.Locale;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import Produto;
 
 public class ProdutoNaoPerecivelTest {
 
@@ -17,7 +19,7 @@ public class ProdutoNaoPerecivelTest {
     
     @BeforeAll
     static public void prepare(){
-        Locale.setDefault(new Locale("pt", "BR"));
+        Locale.setDefault(Locale.of("pt", "BR"));   
         produto = new ProdutoNaoPerecivel("Produto teste", 100, 0.1);
     }
     
