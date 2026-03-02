@@ -1,3 +1,4 @@
+package modelo;
 import java.text.NumberFormat;
 
 public class Produto {

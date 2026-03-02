@@ -1,3 +1,4 @@
+package modelo;
 public class ProdutoNaoPerecivel extends Produto {
 
     public ProdutoNaoPerecivel(String desc, double precoCusto, double margemLucro) {
