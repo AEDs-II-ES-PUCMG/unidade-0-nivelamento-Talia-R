@@ -19,8 +19,12 @@ public class ProdutoPerecivel extends Produto {
         this.margemLucro = margemLucro;
     }
 
+    /**
+     * Verifica se o produto está fora da validade.
+     * @return true se a data de validade for anterior a hoje.
+     */
     private boolean foraValidade(){
-        return dataDeValidade.isAfter(LocalDate.now());
+        return dataDeValidade.isBefore(LocalDate.now());
     }
 
     private boolean temDesconto(){
