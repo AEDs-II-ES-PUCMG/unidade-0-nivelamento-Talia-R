@@ -24,13 +24,13 @@ public class ProdutoPerecivelTest {
     
     @Test
     public void calculaPrecoSemDescontoCorretamente(){
-        assertEquals(110.0, produto.valorDeVenda(), 0.01);
+        assertEquals(110.0, produto.valorVenda(), 0.01);
     }
     
     @Test
     public void calculaPrecoComDescontoCorretamente(){
         produto = new ProdutoPerecivel("Perecível teste", 100, 0.1, LocalDate.now().plusDays(2));
-        assertEquals(110.0 * 0.75, produto.valorDeVenda(), 0.01);
+        assertEquals(110.0 * 0.75, produto.valorVenda(), 0.01);
     }
     
     @Test

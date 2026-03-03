@@ -21,7 +21,7 @@ public class ProdutoNaoPerecivelTest {
     
     @Test
     public void calculaPrecoCorretamente(){
-        assertEquals(110.0, produto.valorDeVenda(), 0.01);
+        assertEquals(110.0, produto.valorVenda(), 0.01);
     }
 
     @Test
