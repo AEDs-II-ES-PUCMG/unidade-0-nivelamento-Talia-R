@@ -1,3 +1,5 @@
+package modelo;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -6,8 +8,9 @@ import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
+import java.util.stream.Gatherer.Integrator;
 
-public class Comercio {
+public class App {
     /** Para inclusão de novos produtos no vetor */
     static final int MAX_NOVOS_PRODUTOS = 10;
 
@@ -58,9 +61,30 @@ public class Comercio {
      * @return Um vetor com os produtos carregados, ou vazio em caso de problemas de leitura.
      */
     static Produto[] lerProdutos(String nomeArquivoDados) {
-        Produto[] vetorProdutos;
-        //TO DO
-        return vetorProdutos;
+        Scanner arquivo = null;
+        int i, numProdutos;
+        String linha;
+        Produto produto;
+        Produto[] produtosCadastrados = new Produto[MAX_NOVOS_PRODUTOS];
+
+        try{
+            arquivo = new Scanner(new File(nomeArquivoDados), Charset.forName("UTF-8"));
+            numProdutos = Integer.parseInt(arquivo.nextLine());
+
+            for (i = 0; (i < numProdutos && i < MAX_NOVOS_PRODUTOS); i++) {
+                linha = arquivo.nextLine();
+                produto = Produto.criarDoTexto(linha);
+                produtosCadastrados[i] = produto;
+            }
+            quantosProdutos = i;
+
+        } catch(IOException exceptionArquivo) {
+            produtosCadastrados = null;
+        } finally{
+            arquivo.close();
+        }
+
+        return produtosCadastrados;
     }
 
     /** Lista todos os produtos cadastrados, numerados, um por linha */
@@ -76,7 +100,27 @@ public class Comercio {
     /** Localiza um produto no vetor de cadastrados, a partir do nome, e imprime seus dados. 
      *  A busca não é sensível ao caso.  Em caso de não encontrar o produto, imprime mensagem padrão */
     static void localizarProdutos(){
-        //TO DO
+        String descricao;
+        ProdutoNaoPerecivel produtoALocalizar;
+        Produto produto = null;
+        Boolean localizado = false;
+
+        cabecalho();
+        System.out.println("Infome a descrição do produto desejado.");
+        descricao = teclado.nextLine();
+        produtoALocalizar = new ProdutoNaoPerecivel(descricao, 0.01);
+        for (int i = 0; (i<quantosProdutos && !localizado); i++) {
+            if(produtosCadastrados[i].equals(produtoALocalizar)){
+                localizado = true;
+            }
+        }
+
+        if(!localizado){
+            System.out.println("Produto não localizado!");
+        } else {
+            System.out.println(produto.toString());
+        }
+
     }
 
     /**
