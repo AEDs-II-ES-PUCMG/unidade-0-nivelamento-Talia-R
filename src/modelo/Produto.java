@@ -81,18 +81,6 @@ public abstract class Produto {
 	String descricao = partes[1];
 	double precoDeCusto = Double.parseDouble(partes[2]);
 	double margemDeLucro = Double.parseDouble(partes[3]);
-
-	/* 
-	if(tipo == 2) {
-		String dataTexto = partes[4];
-		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		LocalDate data = LocalDate.parse(dataTexto,formatador);
-
-		novoProduto = new ProdutoPerecivel(descricao, precoDeCusto, margemDeLucro, data);
-	} else{
-		novoProduto = new ProdutoNaoPerecivel(descricao, precoDeCusto, margemDeLucro);
-	}
-*/
 	
 	switch(tipo){
 		case 1-> novoProduto = new ProdutoNaoPerecivel(descricao, precoDeCusto, margemDeLucro);
