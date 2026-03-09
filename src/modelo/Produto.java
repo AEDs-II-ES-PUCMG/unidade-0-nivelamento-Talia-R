@@ -2,6 +2,7 @@ package modelo;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 
 public abstract class Produto {
 	
@@ -74,23 +75,28 @@ public abstract class Produto {
 	*/
 	public static Produto criarDoTexto(String linha){
 	Produto novoProduto = null;
+	try{
+		String[] partes = linha.split(";");
 
-	String[] partes = linha.split(";");
+		int tipo = Integer.parseInt(partes[0]);
+		// if(tipo != 1 && tipo != 2) throw new IllegalArgumentException("Escolha um tipo válido.");
+		
+		String descricao = partes[1];
+		double precoDeCusto = Double.parseDouble(partes[2]);
+		double margemDeLucro = Double.parseDouble(partes[3]);
+		
+		switch(tipo){
+			case 1-> novoProduto = new ProdutoNaoPerecivel(descricao, precoDeCusto, margemDeLucro);
+			case 2 -> {
+				String dataTexto = partes[4];
+				DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+				LocalDate data = LocalDate.parse(dataTexto,formatador);
+				novoProduto = new ProdutoPerecivel(descricao, precoDeCusto, margemDeLucro, data);
+			} 
+		}
 
-	int tipo = Integer.parseInt(partes[0]);
-	String descricao = partes[1];
-	double precoDeCusto = Double.parseDouble(partes[2]);
-	double margemDeLucro = Double.parseDouble(partes[3]);
-	
-	switch(tipo){
-		case 1-> novoProduto = new ProdutoNaoPerecivel(descricao, precoDeCusto, margemDeLucro);
-		case 2 -> {
-			String dataTexto = partes[4];
-			DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-			LocalDate data = LocalDate.parse(dataTexto,formatador);
-			novoProduto = new ProdutoPerecivel(descricao, precoDeCusto, margemDeLucro, data);
-		} 
-	
+	} catch (InputMismatchException ime){
+		System.err.println(ime.getMessage());
 	}
 
 	return novoProduto;

@@ -151,6 +151,8 @@ public class App {
         StringBuilder infoProduto = new StringBuilder();
 
         String tipo = lerString("\n Qual tipo do produto? \n1) Não Perecivel\n2) Perecivel");
+		if(tipo != "1" && tipo != "2") throw new IllegalArgumentException("Escolha um tipo válido.");
+        
         String descricao = lerString("Insira a descrição do produto: ");
         String precoDeCusto = lerString("Insira o preço de custo do produto: ");
         String margem = lerString("Insira a margem de lucro do produto: ");
@@ -172,9 +174,9 @@ public class App {
      * Uma sugestão de melhoria mais significativa poderia ser o uso de padrão Factory Method para criação dos objetos.
      */
     static void cadastrarProduto(){
-        //TO DO
         System.out.println("\n--- CADASTRANDO NOVO PRODUTO ---");
         String infoProduto = montarLinha();
+        String resul = "Produto não cadastrado";
 
         System.out.println(infoProduto.toString());
         int escolha = lerInteiro("Deseja confirmar o cadastro do produto acima? 1) Sim | 2) Não");
@@ -182,8 +184,12 @@ public class App {
         if(escolha == 1){
             Produto novoProduto = Produto.criarDoTexto(infoProduto);
             produtosCadastrados[produtosCadastrados.length-1] = novoProduto;
-            System.out.println("Produto cadastrado com sucesso!");
+            resul = "Produto cadastrado com sucesso!";
+        } else {
+
         }
+
+        System.out.println(resul);
     }
 
     /**
@@ -201,12 +207,16 @@ public class App {
         int opcao = -1;
         do{
             opcao = menu();
+            try{
             switch (opcao) {
                 case 1 -> listarTodosOsProdutos();
                 case 2 -> localizarProdutos();
                 case 3 -> cadastrarProduto();
             }
             pausa();
+            } catch(IllegalArgumentException iae){
+                System.err.print(iae.getMessage() + "\n");
+            }
         }while(opcao !=0);       
 
         salvarProdutos(nomeArquivoDados);
