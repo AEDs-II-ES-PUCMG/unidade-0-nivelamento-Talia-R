@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -83,7 +84,7 @@ public class App {
      */
     static Produto[] lerProdutos(String nomeArquivoDados) {
         Scanner arquivo = null;
-        int i, numProdutos;
+        int i = 0, numProdutos;
         String linha;
         Produto produto;
         Produto[] produtosCadastrados = new Produto[MAX_NOVOS_PRODUTOS];
@@ -92,10 +93,11 @@ public class App {
             arquivo = new Scanner(new File("src/" + nomeArquivoDados), Charset.forName("UTF-8"));
             numProdutos = Integer.parseInt(arquivo.nextLine());
 
-            for (i = 0; (i < numProdutos && i < MAX_NOVOS_PRODUTOS); i++) {
+            while (arquivo.hasNextLine() && i < numProdutos && i < MAX_NOVOS_PRODUTOS) {
                 linha = arquivo.nextLine();
                 produto = Produto.criarDoTexto(linha);
                 produtosCadastrados[i] = produto;
+                i++;
             }
             quantosProdutos = i;
 
@@ -151,7 +153,7 @@ public class App {
         StringBuilder infoProduto = new StringBuilder();
 
         String tipo = lerString("\n Qual tipo do produto? \n1) Não Perecivel\n2) Perecivel");
-		if(tipo != "1" && tipo != "2") throw new IllegalArgumentException("Escolha um tipo válido.");
+		// if( (tipo == "1") || (tipo == "2")) throw new IllegalArgumentException("Escolha um tipo válido.");
         
         String descricao = lerString("Insira a descrição do produto: ");
         String precoDeCusto = lerString("Insira o preço de custo do produto: ");
@@ -159,9 +161,9 @@ public class App {
 
         infoProduto.append(String.format("%s;%s;%s;%s;", tipo, descricao,precoDeCusto,margem));
 
-        if(tipo == "2"){
+        if(tipo.equals("2")){
             String dataDeValidade = lerString("Insira a data de validade: ");
-            infoProduto.append(";" + dataDeValidade);
+            infoProduto.append(dataDeValidade);
         }
 
         return infoProduto.toString();
@@ -183,11 +185,21 @@ public class App {
         
         if(escolha == 1){
             Produto novoProduto = Produto.criarDoTexto(infoProduto);
-            produtosCadastrados[produtosCadastrados.length-1] = novoProduto;
+            produtosCadastrados[quantosProdutos] = novoProduto;
+            quantosProdutos++;
             resul = "Produto cadastrado com sucesso!";
-        } else {
 
-        }
+            /* 
+            for(int i = 0; i < produtosCadastrados.length; i++){
+                if(produtosCadastrados[i] == null){
+                    produtosCadastrados[i] = novoProduto;
+                    quantosProdutos++;
+                    resul = "Produto cadastrado com sucesso!";
+                    break;
+                }
+            }*/
+
+        } 
 
         System.out.println(resul);
     }
@@ -198,6 +210,20 @@ public class App {
      */
     public static void salvarProdutos(String nomeArquivo){
         //TO DO  
+
+        try {
+            PrintWriter escrever = new PrintWriter(new File("src/" + nomeArquivoDados), Charset.forName("UTF-8"));
+            
+            escrever.println(quantosProdutos + 2);
+
+            for (int i = 0; i < produtosCadastrados.length; i++) {
+                if(produtosCadastrados[i] != null)
+                    escrever.println(produtosCadastrados[i].gerarDadosTexto());
+            }
+            escrever.close();
+        } catch (IOException ioe) {
+            System.err.print(ioe.getMessage() + "\n");
+        }
     }
 
     public static void main(String[] args) throws Exception {

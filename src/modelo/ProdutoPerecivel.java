@@ -67,7 +67,7 @@ public class ProdutoPerecivel extends Produto {
         String precoFormatado = String.format("%.2f", precoCusto).replace(",", ".");
         String margemFormatada = String.format("%.2f", margemLucro).replace(",", ".");
         String dataFormatada = formato.format(dataDeValidade);
-        return String.format("2;%s;%s;%s", descricao, precoFormatado, margemFormatada, dataFormatada);
+        return String.format("2;%s;%s;%s, %s", descricao, precoFormatado, margemFormatada, dataFormatada);
     }
     
 }
