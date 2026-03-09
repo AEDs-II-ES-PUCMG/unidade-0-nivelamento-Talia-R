@@ -52,6 +52,27 @@ public class App {
         return Integer.parseInt(teclado.nextLine());
     }
 
+    static int lerInteiro(String s){
+        System.out.println(s);
+        return Integer.parseInt(teclado.nextLine());
+    }
+
+    static double lerDouble(String s){
+        System.out.println(s);
+        return Double.parseDouble(teclado.nextLine());
+    }
+
+    static String lerString(String s){
+        System.out.println(s);
+        return teclado.nextLine();
+    }
+
+    static LocalDate montarData(String s){
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate data = LocalDate.parse(s, formato);
+        return data;
+    }
+
     /**
      * Lê os dados de um arquivo texto e retorna um vetor de produtos. Arquivo no formato
      * N  (quantiade de produtos) <br/>
@@ -68,7 +89,7 @@ public class App {
         Produto[] produtosCadastrados = new Produto[MAX_NOVOS_PRODUTOS];
 
         try{
-            arquivo = new Scanner(new File(nomeArquivoDados), Charset.forName("UTF-8"));
+            arquivo = new Scanner(new File("src/" + nomeArquivoDados), Charset.forName("UTF-8"));
             numProdutos = Integer.parseInt(arquivo.nextLine());
 
             for (i = 0; (i < numProdutos && i < MAX_NOVOS_PRODUTOS); i++) {
@@ -102,13 +123,15 @@ public class App {
     static void localizarProdutos(){
         String descricao;
         ProdutoNaoPerecivel produtoALocalizar;
-        Produto produto = null;
+        // Produto produto = null;
         Boolean localizado = false;
 
         cabecalho();
         System.out.println("Infome a descrição do produto desejado.");
         descricao = teclado.nextLine();
+
         produtoALocalizar = new ProdutoNaoPerecivel(descricao, 0.01);
+
         for (int i = 0; (i<quantosProdutos && !localizado); i++) {
             if(produtosCadastrados[i].equals(produtoALocalizar)){
                 localizado = true;
@@ -118,9 +141,28 @@ public class App {
         if(!localizado){
             System.out.println("Produto não localizado!");
         } else {
-            System.out.println(produto.toString());
+            System.out.println(localizado.toString());
         }
 
+    }
+
+// tipo; descrição;preçoDeCusto;margemDeLucro;[dataDeValidade]
+    static String montarLinha(){
+        StringBuilder infoProduto = new StringBuilder();
+
+        String tipo = lerString("\n Qual tipo do produto? \n1) Não Perecivel\n2) Perecivel");
+        String descricao = lerString("Insira a descrição do produto: ");
+        String precoDeCusto = lerString("Insira o preço de custo do produto: ");
+        String margem = lerString("Insira a margem de lucro do produto: ");
+
+        infoProduto.append(String.format("%s;%s;%s;%s;", tipo, descricao,precoDeCusto,margem));
+
+        if(tipo == "2"){
+            String dataDeValidade = lerString("Insira a data de validade: ");
+            infoProduto.append(";" + dataDeValidade);
+        }
+
+        return infoProduto.toString();
     }
 
     /**
@@ -131,6 +173,17 @@ public class App {
      */
     static void cadastrarProduto(){
         //TO DO
+        System.out.println("\n--- CADASTRANDO NOVO PRODUTO ---");
+        String infoProduto = montarLinha();
+
+        System.out.println(infoProduto.toString());
+        int escolha = lerInteiro("Deseja confirmar o cadastro do produto acima? 1) Sim | 2) Não");
+        
+        if(escolha == 1){
+            Produto novoProduto = Produto.criarDoTexto(infoProduto);
+            produtosCadastrados[produtosCadastrados.length-1] = novoProduto;
+            System.out.println("Produto cadastrado com sucesso!");
+        }
     }
 
     /**
