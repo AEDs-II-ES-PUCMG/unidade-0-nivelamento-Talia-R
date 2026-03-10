@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-import java.util.stream.Gatherer.Integrator;
+// import java.util.stream.Gatherer.Integrator;
 
 public class App {
     /** Para inclusão de novos produtos no vetor */
