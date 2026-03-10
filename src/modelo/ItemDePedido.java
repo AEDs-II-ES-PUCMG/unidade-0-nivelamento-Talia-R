@@ -7,6 +7,8 @@ public class ItemDePedido {
     private int quantidade;
     private double precoVenda;
     private final double precoBase;
+	static double DESCONTO = 0.05;
+
 
     /**
      * Construtor da classe ItemDePedido.
@@ -24,8 +26,42 @@ public class ItemDePedido {
     }
 
     public double calcularSubtotal() {
-        return 0;
+        return quantidade * precoVenda;
     }
+
+    /**
+     * Preço base do produto
+     * @return
+     */
+    public double precoOriginal(){
+        return precoBase;
+    }
+
+    public int getQuantidadeProduto(){
+        return quantidade;
+    }
+
+    public int alterarQuantidade(int qntNova){
+        return quantidade = qntNova;
+    }
+
+    public double menorPreco(){
+        return precoVenda < precoBase ? precoVenda : precoBase;
+    }
+
+    public double getPrecoVenda(){
+        return precoVenda;
+    }
+
+    public double setarPrecoVenda(double novoPreco){
+        return novoPreco;
+    }
+
+    public double aplicarDesconto(){
+        return precoVenda*DESCONTO;
+    }
+
+
 
     // --- Sobrescrita do método equals ---
 
@@ -35,7 +71,13 @@ public class ItemDePedido {
      */
     @Override
     public boolean equals(Object obj) {
+        ItemDePedido outro = (ItemDePedido) obj;
+        return this.produto.equals(outro.produto);
+    }
 
-        return false;
+    @Override
+    public String toString(){
+        //  Nome do Produto, Quantidade, Preço Unitário e o Subtotal do item
+        return String.format("%s,%d, %.2f,%.2f", produto.descricao, quantidade, precoVenda, calcularSubtotal());
     }
 }
