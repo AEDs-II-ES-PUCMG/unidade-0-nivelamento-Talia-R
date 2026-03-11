@@ -3,6 +3,12 @@
 # AEDs II: Revisão e Nivelamento
 Atividade de revisão e nivelamento da disciplina de AEDs II, abordando programação orientada por objetos e uso de arquivos texto.
 
+## Observação
+
+Esta branch (`emCasa-Oficina1-refactor`) foi criada apenas para fins de **estudo e prática após o prazo da atividade** (09/03).
+
+As alterações presentes aqui foram realizadas após o fechamento da atividade e **não fazem parte da versão entregue para avaliação**.
+
 ## Aluno
 
 * Natália dos Reis Santos
