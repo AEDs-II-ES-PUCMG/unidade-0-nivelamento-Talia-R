@@ -12,7 +12,6 @@ public class Pedido {
 	private static final double DESCONTO_PG_A_VISTA = 0.15;
 	
 	/** Vetor para armazenar os produtos do pedido */
-	// private Produto[] produtos;
 	private ItemDePedido[] itens;
 	
 	/** Data de criação do pedido */
@@ -23,6 +22,8 @@ public class Pedido {
 	
 	/** Indica a forma de pagamento do pedido sendo: 1, pagamento à vista; 2, pagamento parcelado */
 	private int formaDePagamento;
+
+	private static int QNT_ITENS_DESCONTO = 10;
 	
 	/** Construtor do pedido.
 	 *  Deve criar o vetor de produtos do pedido, 
@@ -84,12 +85,12 @@ public class Pedido {
 					if(itens[i].equals(outroPedido.itens[j])){
 
 						int novaQnt = outroPedido.itens[j].getQuantidadeProduto();
-						itens[i].alterarQuantidade(novaQnt); 
+						itens[i].setQuantidade(novaQnt); 
 
 						// descobrir menor preco
 						double menorPreco = itens[i].getPrecoVenda() < outroPedido.itens[j].getPrecoVenda() ? itens[i].getPrecoVenda() : outroPedido.itens[j].getPrecoVenda();
 
-						itens[i].setarPrecoVenda(menorPreco);
+						itens[i].setPrecoVenda(menorPreco);
 						// tenho itens iguais?
 							// sim, procura o menor
 
@@ -109,16 +110,23 @@ public class Pedido {
 	}
 
 
+	/**
+	 * Imprime um recibo no formato:
+	 * número do item) toString do item
+	 * valor do desconto (se o item for aplicável ao desconto)
+	 * @return string formatada contendo informações do pedido.
+	 */
 	public String imprimirRecibo(){
 		StringBuilder s = new StringBuilder();
-
+		int item = 0;
 
 		for (int i = 0; i < itens.length; i++) {
 			if(itens[i] != null){
-				s.append("\n" + itens[i].toString());
-				if(itens[i].getQuantidadeProduto() > 10){
+				s.append("\n-".repeat(10));
+				s.append(String.format("\n%d) %s", ++item, itens[i].toString()));
+				if(itens[i].getQuantidadeProduto() > QNT_ITENS_DESCONTO){
+					itens[i].setPrecoVenda(itens[i].aplicarDesconto());
 					s.append(String.format("\nDesconto de: %d aplicado", ItemDePedido.DESCONTO));
-					itens[i].setarPrecoVenda(itens[i].aplicarDesconto());
 				}
 			}
 		}

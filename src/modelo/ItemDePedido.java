@@ -25,45 +25,65 @@ public class ItemDePedido {
         
     }
 
+    //#region getters
+        public int getQuantidadeProduto(){
+            return quantidade;
+        }
+
+        public double getPrecoVenda(){
+        return precoVenda;
+        }
+
+        public double getPrecoBase(){
+            return precoBase;
+        }
+    //#endregion
+
+    //#region setters
+        /**
+         * Altera o preço de venda do item.
+         * @param novoPreco novo preço do item.
+         * @return novo preço do item.
+         */
+        public double setPrecoVenda(double novoPreco){
+            return novoPreco;
+        }
+
+        /**
+         * Altera a quantidade de produto atual.
+         * @param qntNova nova quantidade do item
+         * @return nova quantidade do item
+         */
+        public int setQuantidade(int qntNova){
+            return quantidade = qntNova;
+        }
+
+    //#endregion
+
+    /**
+     * Calcula o subtotal do item de acordo com a quantidade do item vendido.
+     * @return double com o valor do item a depender da sua quantidade.
+     */
     public double calcularSubtotal() {
         return quantidade * precoVenda;
     }
 
+
     /**
-     * Preço base do produto
-     * @return
+     * Encontra o menor preço do item entre seu preço base e o preço de venda.
+     * @return double contendo o menor valor do produto.
      */
-    public double precoOriginal(){
-        return precoBase;
-    }
-
-    public int getQuantidadeProduto(){
-        return quantidade;
-    }
-
-    public int alterarQuantidade(int qntNova){
-        return quantidade = qntNova;
-    }
-
     public double menorPreco(){
         return precoVenda < precoBase ? precoVenda : precoBase;
     }
 
-    public double getPrecoVenda(){
-        return precoVenda;
-    }
-
-    public double setarPrecoVenda(double novoPreco){
-        return novoPreco;
-    }
-
+    /**
+     * Aplica um desconto no subtotal do produto.
+     * @return double contendo o valor do desconto.
+     */
     public double aplicarDesconto(){
-        return precoVenda*DESCONTO;
+        return calcularSubtotal()*DESCONTO;
     }
-
-
-
-    // --- Sobrescrita do método equals ---
 
     /**
      * Compara a igualdade entre dois itens de pedido.
