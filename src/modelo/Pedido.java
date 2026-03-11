@@ -76,11 +76,12 @@ public class Pedido {
 		this.quantProdutos = 0;
 	}
 
+
 	public void mesclarPedido(Pedido outroPedido){
 		if(itens.length < outroPedido.quantProdutos) throw new IllegalStateException("Mesclagem ultrapassa limite de itens");
 		
 		for (int i = 0; i < outroPedido.itens.length; i++) {
-			if(outroPedido.itens[i] != null){
+			if(outroPedido.itens[i] == null){ // se a posicao tiver vazia/null, preencho
 				for (int j = 0; j < itens.length; j++) {
 					if(itens[i].equals(outroPedido.itens[j])){
 
