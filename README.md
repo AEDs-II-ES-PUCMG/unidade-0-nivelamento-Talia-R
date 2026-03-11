@@ -9,6 +9,8 @@ Esta branch (`emCasa-Oficina1-refactor`) foi criada apenas para fins de **estudo
 
 As alterações presentes aqui foram realizadas após o fechamento da atividade e **não fazem parte da versão entregue para avaliação**.
 
+Essas alterações não foram mescladas na branch `master` nem em nenhuma das branches utilizadas em sala de aula para avaliação.
+
 ## Aluno
 
 * Natália dos Reis Santos
